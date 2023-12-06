@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All people</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+<body>
+<p>Все люди зарегистрированные в библиотеке:</p>
+<div th:each="person : ${people}">
+    <a th:href="@{/people/{id}(id=${person.getId_person()})}"
+        th:text="${person.getId_person() + ') ' + person.getFio() + ' ,' + person.getYear()}">People</a>
+    <br/>
+</div>
+<br/>
+<a href="/people/new">Создать нового читателя</a>
+<br/>
+<a href="/index.jsp">На стартовую страницу</a>
+<footer>
+    <p>&copy; 2023 OnlineLibrary</p>
+</footer>
+</body>
+</html>

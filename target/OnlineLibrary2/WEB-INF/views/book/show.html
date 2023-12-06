@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Show book</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+<body>
+<h1>Просмотр свойств книги.</h1>
+<p th:text="'ID книги:' + ${book.getId_book()}">Id</p>
+<p th:text="'Название книги:' + ${book.getName()}">Name</p>
+<p th:text="'Автор книги:' + ${book.getAuthor()}">Author</p>
+<p th:text="'Год издания книги:' + ${book.getYear()}">Year</p>
+<br/>
+<div th:if="${person==null}" th:text="'Эта книга свободна'"></div>
+<form th:if="${person==null}" th:method="PATCH" th:action="@{/books/{id}/take(id=${book.getId_book()})}" th:object="${book}">
+    <label for="bookTaker">Выберите кому назначить книгу:</label>
+    <select id="bookTaker"  th:field="*{id_person}">
+        <option th:each="person : ${people}" th:value="${person.getId_person()}" th:text="${person.getFio()}">
+        </option>
+    </select>
+    <input type="submit" value="Назначить">
+</form>
+<div th:if="${person!=null}" th:text="'Книгу забрал(а) ' + ${person.getFio()}"> </div>
+<form th:if="${person!=null}" th:method="Patch" th:action="@{/books/{id}/release(id=${book.getId_book()})}">
+    <label for="release">Книгу вернули?</label>
+    <input  type="submit" value="Отпустить книгу" id="release">
+</form>
+<br/>
+<button><a th:href="@{/books/{id}/edit(id=${book.getId_book()})}">Редактировать книгу</a></button>
+<br/>
+<form th:method="Delete" th:action="@{/books/{id}(id=${book.getId_book()})}">
+    <br/>
+<input type="submit" value="Удалить книгу">
+</form>
+<br/>
+<button><a href="/books">Назад</a></button>
+<footer>
+    <p>&copy; 2023 OnlineLibrary</p>
+</footer>
+</body>
+</html>
